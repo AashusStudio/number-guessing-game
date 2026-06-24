@@ -9,7 +9,11 @@ def game(username, data):
 
     for attempt in range(1, max_attempts + 1):
 
-        user_guess = int(input(f"\nAttempt {attempt}: "))
+        try:
+            user_guess = int(input(f"\nAttempt {attempt}: "))
+        except ValueError:
+            print("\nInvalid input. Please enter a valid number.")
+            continue
 
         if target_number == user_guess:
             reward_points = int(100 / attempt)
@@ -31,8 +35,14 @@ def game(username, data):
 
 # load data
 def load_data():
-    with open("data.json", "r") as file:
-        return json.load(file)
+
+    try:
+        with open("data.json", "r") as file:
+            return json.load(file)
+    except FileNotFoundError:
+        return {"user": {}}
+    except json.JSONDecodeError:
+        return {"user": {}}
 
 
 # save data
@@ -44,18 +54,22 @@ def save_data(data):
 # login function
 def login(data):
 
-    username_input = str(input("Enter your username: "))
+    while True:
+        username_input = input("Enter your username: ")
 
-    if username_input in data["user"]:
-        password_input = str(input("Enter your pass: "))
+        if username_input in data["user"]:
+            password_input = input("Enter your pass: ")
 
-        if password_input == data["user"][username_input]["pass"]:
-            return username_input
+            if password_input == data["user"][username_input]["pass"]:
+                return username_input
+            else:
+                print("❗Password incorrect\n")
         else:
-            print("❗password not match\n")
+            print("❗Username not found\n")
 
-    else:
-        print("❗username not match\n")
+        retry = input("Try again? (y/n): ")
+        if retry == "n":
+            return None
 
 
 # sign in function
@@ -84,7 +98,11 @@ while True:
 
     print("\n1. Login\n2. Sign up\n3. Leaderboard\n")
 
-    menu_choice = int(input(">> "))
+    try:
+        menu_choice = int(input(">> "))
+    except ValueError:
+            print("\nInvalid input. Please enter a valid number.")
+            continue
 
     if menu_choice == 1:
 
