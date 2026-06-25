@@ -1,20 +1,8 @@
 {
     "user": {
-        "aashish": {
-            "pass": "12345678",
-            "balance": 676
-        },
-        "kriti": {
-            "pass": "12345678",
-            "balance": 167
-        },
-        "akhil": {
-            "pass": "12345678",
-            "balance": 1016
-        },
-        "anjali": {
-            "pass": "12345678",
-            "balance": 33
+        "aashish1122": {
+            "pass": "1122",
+            "balance": 0
         }
     }
 }

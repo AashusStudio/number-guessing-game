@@ -1,5 +1,11 @@
 import random
 import json
+import os
+
+DATA_FILE = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)),
+    "data.json"
+)
 
 
 # game function
@@ -37,7 +43,7 @@ def game(username, data):
 def load_data():
 
     try:
-        with open("data.json", "r") as file:
+        with open(DATA_FILE, "r") as file:
             return json.load(file)
     except FileNotFoundError:
         return {"user": {}}
@@ -47,7 +53,7 @@ def load_data():
 
 # save data
 def save_data(data):
-    with open("data.json", "w") as file:
+    with open(DATA_FILE, "w") as file:
         json.dump(data, file, indent=4)
 
 
