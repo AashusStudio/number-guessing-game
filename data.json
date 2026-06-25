@@ -1,7 +1,11 @@
 {
     "user": {
-        "aashish1122": {
-            "pass": "1122",
+        "aashish_f.x": {
+            "pass": "aashish01",
+            "balance": 0
+        },
+        "aa": {
+            "pass": "aa",
             "balance": 0
         }
     }

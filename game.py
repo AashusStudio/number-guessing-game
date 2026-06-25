@@ -61,20 +61,34 @@ def save_data(data):
 def login(data):
 
     while True:
-        username_input = input("Enter your username: ")
+        username_input = input("\nEnter your username: ")
 
         if username_input in data["user"]:
-            password_input = input("Enter your pass: ")
+            password_input = input("\nEnter your pass: ")
 
             if password_input == data["user"][username_input]["pass"]:
                 return username_input
             else:
-                print("❗Password incorrect\n")
+                print("❗Password incorrect")
+
+                retry = input("\nTry again? (y/n): ")
+                if retry == "y":
+                    continue
+                elif retry == "n":
+                    return None
+                else:
+                    print("\nInvalid input.\n")
+                    return None
         else:
             print("❗Username not found\n")
 
         retry = input("Try again? (y/n): ")
-        if retry == "n":
+        if retry == "y":
+            continue
+        elif retry == "n":
+            return None
+        else:
+            print("Invalid input.\n")
             return None
 
 
@@ -100,44 +114,54 @@ def sign_in(new_username, data):
         print("Invalid username")
 
 
+def load_balance(data, username):
+    return data["user"][username]["balance"]
+
+
 while True:
 
-    print("\n1. Login\n2. Sign up\n3. Leaderboard\n")
+    print("\n1. Login\n2. Sign up\n3. Leaderboard\n4. Exit\n")
 
     try:
-        menu_choice = int(input(">> "))
+        main_menu_choice = int(input(">> "))
     except ValueError:
             print("\nInvalid input. Please enter a valid number.")
             continue
 
-    if menu_choice == 1:
+    if main_menu_choice == 1:
 
         data = load_data()
         username = login(data)
 
         if username is not None:
-            game(username, data)
+
+            balance = load_balance(data, username)
 
             while True:
+                print(f"\n=========[ 👤 {username} ]=========\n\n1. Balance\n2. Leaderboard\n3. Highlow guess (game)\n\n4. ← Back")
 
-                print("Want to play again ? (y/n)")
-                replay_choice = str(input(">>(y/n): "))
+                try:
+                    menu_choice = int(input("\n>> "))
+                except ValueError:
+                    print("Invalid input. input should be a number")
+                    continue
+                print("\n\n\n\n")
+                if menu_choice == 1:
+                    print(f"\nBALANCE -💲 {balance}")
+                    
 
-                if replay_choice == "y":
-                    game(username, data)
-
-                elif replay_choice == "n":
-                    print("\nThanks For Playing!")
-                    break
-
-    elif menu_choice == 2:
+    elif main_menu_choice == 2:
 
         new_username = str(input("Create username: "))
         data = load_data()
         sign_in(new_username, data)
 
-    elif menu_choice == 3:
+    elif main_menu_choice == 3:
         print("\nComing soon...")
+
+    elif main_menu_choice == 4:
+        print("\nThanks For Playing!")
+        break
 
     else:
         print("\nInvalid")
